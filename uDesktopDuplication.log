@@ -1,0 +1,16 @@
+[uDD::Log][2021-04-19 16:58:54] Start
+[uDD::Log][2021-04-19 16:58:54] OS Version    : 10.0
+[uDD::Log][2021-04-19 16:58:54] Build Number  : 19042
+[uDD::Log][2021-04-19 16:58:54] Service Pack  : 
+[uDD::Log][2021-04-19 16:58:54] Graphics Card [0] : Intel(R) HD Graphics 530
+[uDD::Log][2021-04-19 16:58:54]   > Monitor[0] : \\.\DISPLAY1
+[uDD::Log][2021-04-19 16:58:54] Graphics Card [1] : Microsoft Basic Render Driver
+[uDD::Log][2021-04-19 16:58:54] Monitor::Initialized() =>
+[uDD::Log][2021-04-19 16:58:54]     ID    : 0
+[uDD::Log][2021-04-19 16:58:54]     Size  : (1600, 900)
+[uDD::Log][2021-04-19 16:58:54]     DPI   : (118, 117)
+[uDD::Log][2021-04-19 16:58:54]     Rot   : Landscape
+[uDD::Log][2021-04-19 16:58:54] Duplicator::Initialize() => OK.
+[uDD::Err][2021-04-19 16:58:55] Monitor::GetBuffer() => CopyTextureFromGpuToCpu() has not been called yet.
+[uDD::Err][2021-04-19 16:58:55] Monitor::GetBuffer() => CopyTextureFromGpuToCpu() has not been called yet.
+[uDD::Log][2021-04-19 16:59:17] Stop

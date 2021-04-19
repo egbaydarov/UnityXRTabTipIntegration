@@ -1,0 +1,15 @@
+C:\Users\UGAGA\source\repos\UWPLib\UWPLib\bin\Release\UWPLib.dll
+C:\Users\UGAGA\source\repos\UWPLib\UWPLib\bin\Release\UWPLib.pdb
+C:\Users\UGAGA\source\repos\UWPLib\UWPLib\bin\Release\Windows.winmd
+C:\Users\UGAGA\source\repos\UWPLib\UWPLib\obj\Release\UWPLib.csproj.CoreCompileInputs.cache
+C:\Users\UGAGA\source\repos\UWPLib\UWPLib\obj\Release\UWPLib.csproj.CopyComplete
+C:\Users\UGAGA\source\repos\UWPLib\UWPLib\obj\Release\UWPLib.dll
+C:\Users\UGAGA\source\repos\UWPLib\UWPLib\obj\Release\UWPLib.pdb
+C:\Users\UGAGA\source\repos\UWPLib\UWPLib\obj\Release\UWPLib.csprojAssemblyReference.cache
+C:\Users\UGAGA\Desktop\UWPLib\UWPLib\bin\Release\UWPLib.dll
+C:\Users\UGAGA\Desktop\UWPLib\UWPLib\bin\Release\UWPLib.pdb
+C:\Users\UGAGA\Desktop\UWPLib\UWPLib\obj\Release\UWPLib.csprojAssemblyReference.cache
+C:\Users\UGAGA\Desktop\UWPLib\UWPLib\obj\Release\UWPLib.csproj.CoreCompileInputs.cache
+C:\Users\UGAGA\Desktop\UWPLib\UWPLib\obj\Release\UWPLib.csproj.CopyComplete
+C:\Users\UGAGA\Desktop\UWPLib\UWPLib\obj\Release\UWPLib.dll
+C:\Users\UGAGA\Desktop\UWPLib\UWPLib\obj\Release\UWPLib.pdb

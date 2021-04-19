@@ -1,0 +1,15 @@
+C:\Users\UGAGA\source\repos\TextFieldWidget\TextFieldWidget\bin\Debug\TextFieldWidget.exe.config
+C:\Users\UGAGA\source\repos\TextFieldWidget\TextFieldWidget\bin\Debug\TextFieldWidget.exe
+C:\Users\UGAGA\source\repos\TextFieldWidget\TextFieldWidget\bin\Debug\TextFieldWidget.pdb
+C:\Users\UGAGA\source\repos\TextFieldWidget\TextFieldWidget\obj\Debug\TextFieldWidget.csprojAssemblyReference.cache
+C:\Users\UGAGA\source\repos\TextFieldWidget\TextFieldWidget\obj\Debug\MainWindow.g.cs
+C:\Users\UGAGA\source\repos\TextFieldWidget\TextFieldWidget\obj\Debug\App.g.cs
+C:\Users\UGAGA\source\repos\TextFieldWidget\TextFieldWidget\obj\Debug\TextFieldWidget_MarkupCompile.cache
+C:\Users\UGAGA\source\repos\TextFieldWidget\TextFieldWidget\obj\Debug\TextFieldWidget_MarkupCompile.lref
+C:\Users\UGAGA\source\repos\TextFieldWidget\TextFieldWidget\obj\Debug\MainWindow.baml
+C:\Users\UGAGA\source\repos\TextFieldWidget\TextFieldWidget\obj\Debug\TextFieldWidget.g.resources
+C:\Users\UGAGA\source\repos\TextFieldWidget\TextFieldWidget\obj\Debug\TextFieldWidget.Properties.Resources.resources
+C:\Users\UGAGA\source\repos\TextFieldWidget\TextFieldWidget\obj\Debug\TextFieldWidget.csproj.GenerateResource.cache
+C:\Users\UGAGA\source\repos\TextFieldWidget\TextFieldWidget\obj\Debug\TextFieldWidget.csproj.CoreCompileInputs.cache
+C:\Users\UGAGA\source\repos\TextFieldWidget\TextFieldWidget\obj\Debug\TextFieldWidget.exe
+C:\Users\UGAGA\source\repos\TextFieldWidget\TextFieldWidget\obj\Debug\TextFieldWidget.pdb
