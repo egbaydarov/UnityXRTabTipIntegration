@@ -16,6 +16,9 @@ namespace TextFieldWidget
         private void OnAppExit(object sender, ExitEventArgs e)
         {
             AppMainWindow.IsSharedMomeryReachable = false;
+            AppMainWindow.mmf.Dispose();
+            AppMainWindow.TextChangedEvent.Dispose();
+            AppMainWindow.TextFieldClearEvent.Dispose();
         }
 
         private void Application_Startup(object sender, StartupEventArgs e)

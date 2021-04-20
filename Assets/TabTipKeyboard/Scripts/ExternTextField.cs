@@ -14,22 +14,16 @@ public class ExternTextField : MonoBehaviour
     System.Diagnostics.Process TFProc;
     System.Diagnostics.Process TabTipProc;
 
-    [SerializeField]
+    EventWaitHandle TextChangedEvent;
+    EventWaitHandle TextFieldClearEvent;
+    MemoryMappedFile mmf;
+
     const int MMF_MAX_SIZE = 1024;
-    [SerializeField]
     const int MMF_VIEW_SIZE = 1024;
     byte[] buffer = new byte[MMF_VIEW_SIZE];
 
     MemoryMappedViewStream TextFieldDataStream = null;
     public static bool IsSharedMomeryReachable = true;
-
-    private void OnGUI()
-    {
-        GUI.TextField(new Rect(10, 10, 300, 30), ExternTextFieldData, MMF_VIEW_SIZE);
-
-        if (GUI.Button(new Rect(10, 45, 110, 30), new GUIContent("Show Keyboard")))
-            ShowKeyboard();
-    }
 
     private void Update()
     {
@@ -37,26 +31,38 @@ public class ExternTextField : MonoBehaviour
         {
             RestartApp();
         }
-        TextReader textReader = new StreamReader(TextFieldDataStream);
-        ExternTextFieldData = textReader.ReadLine();
-        TextFieldDataStream.Seek(0, SeekOrigin.Begin);
+
     }
 
-    public void SharedMemorySetup()
+    public void ClearExterTextField()
     {
-        using (var mmf = MemoryMappedFile.CreateOrOpen("TextField_Widget", MMF_MAX_SIZE, MemoryMappedFileAccess.ReadWrite))
-        using (var mmvStream = mmf.CreateViewStream(0, MMF_VIEW_SIZE))
+        TextFieldClearEvent.Set();
+    }
+
+    void IPCsetup()
+    {
+        TextChangedEvent = new EventWaitHandle(false, EventResetMode.AutoReset, "ewhTabTipKeyboard");
+        TextFieldClearEvent = new EventWaitHandle(false, EventResetMode.AutoReset, "ewhTabTipClear");
+        mmf = MemoryMappedFile.CreateOrOpen("hookTabTip", MMF_MAX_SIZE, MemoryMappedFileAccess.ReadWrite);
+        TextFieldDataStream = mmf.CreateViewStream(0, MMF_VIEW_SIZE);
+
+        var thread = new Thread(() =>
         {
-            TextFieldDataStream = mmvStream;
-            while (IsSharedMomeryReachable) ;
-        }
+            while (true)
+            {
+                TextChangedEvent.WaitOne();
+                TextReader textReader = new StreamReader(TextFieldDataStream);
+                ExternTextFieldData = textReader.ReadLine();
+                TextFieldDataStream.Seek(0, SeekOrigin.Begin);
+            }
+        });
+        thread.IsBackground = true;
+        thread.Start();
     }
 
     private void Start()
     {
-        Thread textUpdate = new Thread(new ThreadStart(SharedMemorySetup));
-        textUpdate.IsBackground = true;
-        textUpdate.Start();
+        IPCsetup();
 
         RestartApp();
         ShowKeyboard();

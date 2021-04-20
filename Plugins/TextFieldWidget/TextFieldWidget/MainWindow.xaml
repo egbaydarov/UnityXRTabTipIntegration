@@ -7,7 +7,10 @@
         mc:Ignorable="d"
         Title="DoNotClose" Height="80" Width="250"
         Topmost="True"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        WindowStyle ="None"
+        Background="Transparent">
     <StackPanel Margin="10" FocusManager.FocusedElement="{Binding ElementName=textField}">
         <TextBox x:Name="textField" TextChanged="textField_TextChanged"/>
     </StackPanel>

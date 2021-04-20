@@ -12,3 +12,17 @@ C:\Users\UGAGA\source\repos\TextFieldWidget\TextFieldWidget\obj\Release\TextFiel
 C:\Users\UGAGA\source\repos\TextFieldWidget\TextFieldWidget\obj\Release\TextFieldWidget.csproj.CoreCompileInputs.cache
 C:\Users\UGAGA\source\repos\TextFieldWidget\TextFieldWidget\obj\Release\TextFieldWidget.exe
 C:\Users\UGAGA\source\repos\TextFieldWidget\TextFieldWidget\obj\Release\TextFieldWidget.pdb
+C:\Users\UGAGA\Desktop\New Unity Project\Plugins\TextFieldWidget\TextFieldWidget\bin\Release\TextFieldWidget.exe.config
+C:\Users\UGAGA\Desktop\New Unity Project\Plugins\TextFieldWidget\TextFieldWidget\bin\Release\TextFieldWidget.exe
+C:\Users\UGAGA\Desktop\New Unity Project\Plugins\TextFieldWidget\TextFieldWidget\bin\Release\TextFieldWidget.pdb
+C:\Users\UGAGA\Desktop\New Unity Project\Plugins\TextFieldWidget\TextFieldWidget\obj\Release\MainWindow.g.cs
+C:\Users\UGAGA\Desktop\New Unity Project\Plugins\TextFieldWidget\TextFieldWidget\obj\Release\App.g.cs
+C:\Users\UGAGA\Desktop\New Unity Project\Plugins\TextFieldWidget\TextFieldWidget\obj\Release\TextFieldWidget_MarkupCompile.cache
+C:\Users\UGAGA\Desktop\New Unity Project\Plugins\TextFieldWidget\TextFieldWidget\obj\Release\TextFieldWidget_MarkupCompile.lref
+C:\Users\UGAGA\Desktop\New Unity Project\Plugins\TextFieldWidget\TextFieldWidget\obj\Release\MainWindow.baml
+C:\Users\UGAGA\Desktop\New Unity Project\Plugins\TextFieldWidget\TextFieldWidget\obj\Release\TextFieldWidget.g.resources
+C:\Users\UGAGA\Desktop\New Unity Project\Plugins\TextFieldWidget\TextFieldWidget\obj\Release\TextFieldWidget.Properties.Resources.resources
+C:\Users\UGAGA\Desktop\New Unity Project\Plugins\TextFieldWidget\TextFieldWidget\obj\Release\TextFieldWidget.csproj.GenerateResource.cache
+C:\Users\UGAGA\Desktop\New Unity Project\Plugins\TextFieldWidget\TextFieldWidget\obj\Release\TextFieldWidget.csproj.CoreCompileInputs.cache
+C:\Users\UGAGA\Desktop\New Unity Project\Plugins\TextFieldWidget\TextFieldWidget\obj\Release\TextFieldWidget.exe
+C:\Users\UGAGA\Desktop\New Unity Project\Plugins\TextFieldWidget\TextFieldWidget\obj\Release\TextFieldWidget.pdb

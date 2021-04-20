@@ -6,20 +6,26 @@ using UnityEngine.Events;
 using System.Runtime.Serialization.Formatters.Binary;
 using System;
 using System.IO;
+using UnityEngine.UI;
 
 public class MonitorToKeyboard : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField]
     int yUpSplit;
+    [SerializeField]
     int yDownSplit;
+    [SerializeField]
     int xLeftSplit;
+    [SerializeField]
     int xRightSplit;
 
-    [SerializeField]
     List<Vector4> Caps = new List<Vector4>();
+    List<Color> CapsColors = new List<Color>();
+    List<GameObject> CapsGOs = new List<GameObject>();
+    [SerializeField] GameObject CapsParent;
+
 
     UnityEvent OnSpaceUp = new UnityEvent();
-
     CursorMovement cursorData;
     TMP_Text TextTip;
     CopyTextureBuffer keyboardTexture;
@@ -36,8 +42,8 @@ public class MonitorToKeyboard : MonoBehaviour
         var tips = new string[]
         {
             "Put mouse pointer to upper border of Tab Tip Windows Keyboard then press Space button",
-            "Put mouse pointer to down border of Tab Tip Windows Keyboard then press Space button",
-            "Put mouse pointer to left border of Tab Tip Windows Keyboard then press Space button",
+            "Put mouse pointer to down  border of Tab Tip Windows Keyboard then press Space button",
+            "Put mouse pointer to left  border of Tab Tip Windows Keyboard then press Space button",
             "Put mouse pointer to right border of Tab Tip Windows Keyboard then press Space button",
             "Successful!"
         };
@@ -47,6 +53,8 @@ public class MonitorToKeyboard : MonoBehaviour
         OnSpaceUp.AddListener(() =>
         {
             vals[pointsCounter++] = new Vector2Int(cursorData.pointInstance.X, cursorData.pointInstance.Y);
+            Debug.Log(new Vector2Int(cursorData.pointInstance.X, cursorData.pointInstance.Y));
+
             TextTip.text = tips[pointsCounter];
 
 
@@ -65,9 +73,73 @@ public class MonitorToKeyboard : MonoBehaviour
         });
     }
 
-    public void AddCap()
+    //TODO
+
+    //public void AddCap()
+    //{
+    //    tipsDisabler.EnableDisableTips(true);
+
+
+    //    int pointsCounter = 0;
+    //    var vals = new Vector2Int[4];
+    //    var tips = new string[]
+    //    {
+    //        "Put mouse pointer to upper corner of place where cap will be placed then press Space button",
+    //        "Put mouse pointer to down  corner of place where cap will be placed then press Space button",
+    //        "Put mouse pointer to left  corner of place where cap will be placed then press Space button",
+    //        "Put mouse pointer to right corner of place where cap will be placed then press Space button (Color of pixel under this point will be color of cap)",
+    //        "Successful!"
+    //    };
+    //    TextTip.text = tips[pointsCounter];
+
+    //    OnSpaceUp.RemoveAllListeners();
+    //    OnSpaceUp.AddListener(() =>
+    //    {
+    //        vals[pointsCounter++] = new Vector2Int(cursorData.pointInstance.X, cursorData.pointInstance.Y);
+    //        TextTip.text = tips[pointsCounter];
+
+
+    //        if (pointsCounter == 4)
+    //        {
+    //            Caps.Add(new Vector4(vals[0].y, vals[1].y, vals[2].x, vals[3].x));
+    //            CapsColors.Add(keyboardTexture.GetPixel(vals[3].x, vals[3].y));
+
+    //            OnSpaceUp.RemoveAllListeners();
+    //            tipsDisabler.EnableDisableTips(false);
+    //            CapsGOs.Add(InitializeCap(Caps[Caps.Count - 1], CapsColors[CapsColors.Count - 1]));
+    //            SaveCalibratedData();
+    //            OnSpaceUp.RemoveAllListeners();
+    //        }
+    //    });
+    //}
+
+    //GameObject InitializeCap(Vector4 capCoords, Color color)
+    //{
+    //    GameObject cap = new GameObject();
+
+
+    //    cap.transform.parent = CapsParent.transform;
+    //    cap.AddComponent<CanvasRenderer>();
+    //    RectTransform rTransform = cap.AddComponent<RectTransform>();
+    //    rTransform.sizeDelta = new Vector2(capCoords.w - capCoords.z, capCoords.y - capCoords.x);
+    //    rTransform.localScale = Vector3.one;
+
+    //    Image capImage = cap.AddComponent<Image>();
+
+    //    capImage.color = color;
+
+    //    return cap;
+    //}
+
+    public void RemoveAllCaps()
     {
-        //TODO
+        Caps.Clear();
+        CapsColors.Clear();
+        foreach (var i in CapsGOs)
+            Destroy(i);
+        CapsGOs.Clear();
+
+        SaveCalibratedData();
     }
 
     void Start()
@@ -91,13 +163,6 @@ public class MonitorToKeyboard : MonoBehaviour
         TextTip = TempGO.GetComponent<TextMeshProUGUI>();
     }
 
-    private void OnGUI()
-    {
-        if (GUI.Button(new Rect(10, 80, 175, 30), new GUIContent("Calibrate Keyboard Texture")))
-            RunCalibrate();
-        if (GUI.Button(new Rect(10, 115, 70, 30), new GUIContent("Add Cap")))
-            AddCap();
-    }
 
     // Update is called once per frame
     void Update()
@@ -112,7 +177,7 @@ public class MonitorToKeyboard : MonoBehaviour
     {
         BinaryFormatter bf = new BinaryFormatter();
 
-        CalibrationData data = new CalibrationData(yUpSplit, xRightSplit, yDownSplit, xLeftSplit, Caps);
+        CalibrationData data = new CalibrationData(yUpSplit, xRightSplit, yDownSplit, xLeftSplit, Caps, CapsColors);
 
         using (FileStream stream = new FileStream(Application.persistentDataPath + FileName, FileMode.OpenOrCreate))
         {
@@ -134,11 +199,18 @@ public class MonitorToKeyboard : MonoBehaviour
                 data = (CalibrationData)bf.Deserialize(stream);
             }
 
-            Caps = data.getUnityVectors();
+            Caps = data.getUnityVectorsForCaps();
             yUpSplit = data.yUpSplit;
             xRightSplit = data.xRightSplit;
             yDownSplit = data.yDownSplit;
             xLeftSplit = data.xLeftSplit;
+            CapsColors = data.getUnityVectorsForCapsColors();
+
+            for (int i = 0; i < Caps.Count; ++i)
+            {
+                //CapsGOs.Add(InitializeCap(Caps[i], CapsColors[i]));//TODO
+            }
+
             Debug.Log("Calibration data loaded!");
         }
         else
@@ -154,27 +226,43 @@ class CalibrationData
     public int xLeftSplit;
     public int xRightSplit;
 
-    [SerializeField]
-    public Vector4Serializsable[] Caps;
+    public Vector4Serializsable[] Caps = null;
+    public Vector4Serializsable[] CapsColors = null;
 
-    public List<Vector4> getUnityVectors()
+    public List<Vector4> getUnityVectorsForCaps()
     {
         List<Vector4> vectors = new List<Vector4>();
-        foreach (var i in Caps)
-            vectors.Add(new Vector4(i.x, i.y, i.z, i.w));
+        if (Caps != null)
+            foreach (var i in Caps)
+                vectors.Add(new Vector4(i.x, i.y, i.z, i.w));
         return vectors;
     }
 
-    public CalibrationData(int yUpSplit, int xRightSplit, int yDownSplit, int xLeftSplit, List<Vector4> caps)
+    public List<Color> getUnityVectorsForCapsColors()
+    {
+        List<Color> vectors = new List<Color>();
+        if (CapsColors != null)
+            foreach (var i in CapsColors)
+                vectors.Add(new Color(i.x, i.y, i.z, i.w));
+        return vectors;
+    }
+
+    public CalibrationData(int yUpSplit, int xRightSplit, int yDownSplit, int xLeftSplit, List<Vector4> caps, List<Color> capsColors)
     {
         this.yUpSplit = yUpSplit;
         this.yDownSplit = yDownSplit;
         this.xLeftSplit = xLeftSplit;
         this.xRightSplit = xRightSplit;
         Caps = new Vector4Serializsable[caps.Count];
+        CapsColors = new Vector4Serializsable[capsColors.Count];
         for (int i = 0; i < Caps.Length; ++i)
         {
             Caps[i] = new Vector4Serializsable(caps[i]);
+        }
+
+        for (int i = 0; i < CapsColors.Length; ++i)
+        {
+            CapsColors[i] = new Vector4Serializsable(capsColors[i]);
         }
     }
 
@@ -185,10 +273,10 @@ class CalibrationData
     [Serializable]
     public class Vector4Serializsable
     {
-        public int x;
-        public int y;
-        public int z;
-        public int w;
+        public float x;
+        public float y;
+        public float z;
+        public float w;
 
         public Vector4Serializsable()
         {
@@ -200,6 +288,14 @@ class CalibrationData
             this.y = (int)cap.y;
             this.z = (int)cap.z;
             this.w = (int)cap.w;
+        }
+
+        public Vector4Serializsable(Color capColor)
+        {
+            this.x = capColor.r;
+            this.y = capColor.g;
+            this.z = capColor.b;
+            this.w = capColor.a;
         }
     }
 }

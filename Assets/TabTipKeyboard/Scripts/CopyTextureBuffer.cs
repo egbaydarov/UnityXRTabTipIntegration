@@ -6,6 +6,7 @@ public class CopyTextureBuffer : MonoBehaviour
 {
     [SerializeField] uDesktopDuplication.Texture uddTexture;
     [SerializeField] UnityEngine.UI.Image img;
+    [SerializeField] Sprite NotAvailable;
 
     Texture2D texture_;
     Color32[] pixels_;
@@ -88,11 +89,15 @@ public class CopyTextureBuffer : MonoBehaviour
         }
 
         img.sprite = Sprite.Create(texture_, GetKeyboardRectangle(), new Vector2(0, 0));
+
+        if (!uddTexture.monitor.available)
+            img.sprite = NotAvailable;
     }
 
     void CopyTexture()
     {
         var buffer = uddTexture.monitor.buffer;
+
         if (buffer == IntPtr.Zero) return;
 
         var width = uddTexture.monitor.width;
@@ -101,5 +106,10 @@ public class CopyTextureBuffer : MonoBehaviour
 
         texture_.SetPixels32(pixels_);
         texture_.Apply();
+    }
+
+    public Color GetPixel(int x, int y)
+    {
+        return texture_.GetPixel(x, y);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.IO.MemoryMappedFiles;
 using System.Threading;
 using System.Windows;
@@ -14,6 +15,10 @@ namespace TextFieldWidget
         MemoryMappedViewStream TextFieldDataStream = null;
         public static bool IsSharedMomeryReachable = true;
 
+        public static EventWaitHandle TextChangedEvent;
+        public static EventWaitHandle TextFieldClearEvent;
+        public static MemoryMappedFile mmf;
+
         public static int SIZE = 1024;
 
         public AppMainWindow()
@@ -21,24 +26,29 @@ namespace TextFieldWidget
             InitializeComponent();
             this.Top = 0;
             this.Left = 0;
-
-            Thread textUpdate = new Thread(new ThreadStart(SharedMemorySetup));
-            textUpdate.IsBackground = true;
-            textUpdate.Start();
+            IPCsetup();
         }
 
-        public void SharedMemorySetup()
+        void IPCsetup()
         {
-            int MMF_MAX_SIZE = SIZE;
-            int MMF_VIEW_SIZE = SIZE;
-            
-            using (var mmf = MemoryMappedFile.OpenExisting("TextField_Widget"))
-            using (var mmvStream = mmf.CreateViewStream(0, MMF_VIEW_SIZE))
-            {
-                TextFieldDataStream = mmvStream;
-                while (IsSharedMomeryReachable);
-            }
+            TextChangedEvent = EventWaitHandle.OpenExisting("ewhTabTipKeyboard");
+            TextFieldClearEvent = EventWaitHandle.OpenExisting("ewhTabTipClear");
+            mmf = MemoryMappedFile.CreateOrOpen("hookTabTip", SIZE, MemoryMappedFileAccess.ReadWrite);
+            TextFieldDataStream = mmf.CreateViewStream(0, SIZE);
 
+            var thread = new Thread(() =>
+            {
+                while (true)
+                {
+                    TextFieldClearEvent.WaitOne();
+                    Application.Current.Dispatcher.Invoke(new Action(() => {
+                        textField.Text = ""; 
+
+                    }));
+                }
+            });
+            thread.IsBackground = true;
+            thread.Start();
         }
 
         private void textField_TextChanged(object sender, TextChangedEventArgs e)
@@ -49,6 +59,7 @@ namespace TextFieldWidget
                 textWriter.WriteLine(textField.Text);
                 textWriter.Flush();
                 TextFieldDataStream.Seek(0, SeekOrigin.Begin);
+                TextChangedEvent.Set();
             }
         }
     }
